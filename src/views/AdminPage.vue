@@ -46,7 +46,6 @@
             <el-menu-item index="/adminManage">管理员列表</el-menu-item>
             <el-menu-item index="/searchUser">查找用户</el-menu-item>
           </el-submenu>
-          <el-menu-item index="1" disabled>xxxx</el-menu-item>
         </el-menu>
       </el-aside>
       <el-main>

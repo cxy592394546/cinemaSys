@@ -14,14 +14,14 @@ import searchList from '../components/customer/searchList.vue'
 
 //注册、登陆相关组件
 import Welcome from '../views/Welcome.vue'
-import adminLogin from '../components/login/adminLogin.vue'
 import userLogin from '../components/login/userLogin.vue'
 import register from '../components/login/register.vue'
 import welcomeIndex from '../components/login/welcomeIndex.vue'
 
 //个人信息界面
 import PersonalPage from '../views/PersonalPage.vue'
-import changeMess from '../components/personalPage/changeMess.vue'
+import changeName from '../components/personalPage/changeName.vue'
+import changePassword from '../components/personalPage/changePassword.vue'
 import noticeList from '../components/personalPage/noticeList.vue'
 import personalIndex from '../components/personalPage/personalIndex.vue'
 import personalMess from '../components/personalPage/personalMess.vue'
@@ -60,7 +60,6 @@ const routes = [
     component:Welcome,
     redirect:'/welcomeIndex',
     children:[      
-      {path:'/adminLogin',component:adminLogin},
       {path:'/userLogin',component:userLogin},
       {path:'/register',component:register},
       {path:'/welcomeIndex',component:welcomeIndex},
@@ -86,7 +85,8 @@ const routes = [
     component: PersonalPage,
     redirect:'/personalIndex',
     children:[
-      {path:'/changeMess',component:changeMess},
+      {path:'/changeName',component:changeName},
+      {path:'/changePassword',component:changePassword},
       {path:'/noticeList',component:noticeList},
       {path:'/personalIndex',component:personalIndex},
       {path:'/personalMess',component:personalMess},

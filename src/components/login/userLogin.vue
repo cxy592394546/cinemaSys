@@ -97,7 +97,7 @@ export default {
           "http://cinema.qingxu.website:8086/api/system/login",
           { username:this.loginForm.username, password:this.loginForm.password }
         );
-        if (status == 200) {
+        if (response.data.state == true) {
           if (response.data.result.type == "user") {
             window.sessionStorage.setItem("login", "true");
             window.sessionStorage.setItem("userType", "customer");
@@ -105,7 +105,14 @@ export default {
             window.sessionStorage.setItem("name", this.loginForm.username);
             await this.$router.push({ path: "/Home" });
           }
-        }
+          else if (response.data.result.type == "admin") {
+            window.sessionStorage.setItem("login", "true");
+            window.sessionStorage.setItem("userType", "customer");
+            window.sessionStorage.setItem("loginTime", new Date().getTime());
+            window.sessionStorage.setItem("name", this.loginForm.username);
+            await this.$router.push({ path: "/AdminPage" });
+          }
+        };
       });
     },
     // //登录异步操作

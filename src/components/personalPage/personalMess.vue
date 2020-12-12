@@ -1,10 +1,16 @@
 <template>
   <el-card class="box-card">
     <div class="block">
-      <el-avatar shape="square" icon="el-icon-user-solid" :size="150"></el-avatar>
+      <el-avatar
+        shape="square"
+        icon="el-icon-user-solid"
+        :size="150"
+      ></el-avatar>
     </div>
     <div clas="text">用户名：{{ username }}</div>
-    <el-button type="info" @click="changeMess">修改个人信息</el-button>
+    <div style="margin: 20px 0;"></div>
+    <el-button type="info" @click="changeName">修改用户名</el-button>
+    <el-button type="info" @click="changePassword">修改密码</el-button>
   </el-card>
 </template>
 
@@ -18,8 +24,11 @@ export default {
 
   mounted() {},
   methods: {
-    changeMess(){
-      this.$router.push("/changeMess")
+    changeName() {
+      this.$router.push("/changeName");
+    },
+    changePassword() {
+      this.$router.push("/changePassword");
     },
     handleCommand(command) {
       this.showDot = true;
