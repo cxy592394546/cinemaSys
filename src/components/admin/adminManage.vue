@@ -21,7 +21,7 @@
       <el-table-column
         prop="create_time"
         label="注册时间"
-        width="500"
+        width="450"
       ></el-table-column>
     </el-table>
   </el-card>

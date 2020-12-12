@@ -15,8 +15,7 @@
         default-active="/welcomeIndex"
       >
         <el-menu-item index="/welcomeIndex">首页</el-menu-item>
-        <el-menu-item index="/adminLogin">管理员登陆</el-menu-item>
-        <el-menu-item index="/userLogin">顾客登录</el-menu-item>
+        <el-menu-item index="/userLogin">登录</el-menu-item>
         <el-menu-item index="/register">注册</el-menu-item>
       </el-menu>
     </el-header>
