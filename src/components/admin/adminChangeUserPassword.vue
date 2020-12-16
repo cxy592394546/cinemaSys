@@ -1,10 +1,20 @@
 <template>
   <el-card>
     <h3>新建用户</h3>
-    <el-input placeholder="请输入密码" v-model="password" clearable></el-input>
+    <el-input
+      placeholder="请输入用户用户名"
+      v-model="username"
+      clearable
+    ></el-input>
     <div style="margin: 20px 0;"></div>
     <el-input
-      placeholder="请输入新密码"
+      placeholder="请输入用户原密码"
+      v-model="password"
+      clearable
+    ></el-input>
+    <div style="margin: 20px 0;"></div>
+    <el-input
+      placeholder="请输入用户新密码"
       v-model="newpassword"
       clearable
     ></el-input>
@@ -17,7 +27,7 @@
 export default {
   data() {
     return {
-      username: window.sessionStorage.getItem("name"),
+      username: "",
       password: "",
       newpassword: "",
     };

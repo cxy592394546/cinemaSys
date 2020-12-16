@@ -93,51 +93,51 @@ export default {
   methods: {
     login() {
       this.$refs.loginFormRef.validate(async (valid) => {
-        let response = await this.$axios.post(
-          "http://cinema.qingxu.website:8086/api/system/login",
-          { username:this.loginForm.username, password:this.loginForm.password }
-        );
-        if (response.data.state == true) {
-          if (response.data.result.type == "user") {
-            window.sessionStorage.setItem("login", "true");
-            window.sessionStorage.setItem("userType", "customer");
-            window.sessionStorage.setItem("loginTime", new Date().getTime());
-            window.sessionStorage.setItem("name", this.loginForm.username);
-            await this.$router.push({ path: "/Home" });
-          }
-          else if (response.data.result.type == "admin") {
-            window.sessionStorage.setItem("login", "true");
-            window.sessionStorage.setItem("userType", "customer");
-            window.sessionStorage.setItem("loginTime", new Date().getTime());
-            window.sessionStorage.setItem("name", this.loginForm.username);
-            await this.$router.push({ path: "/AdminPage" });
-          }
-        };
+        let response = await this.$axios
+          .post("http://cinema.qingxu.website:8086/api/system/login", {
+            username: this.loginForm.username,
+            password: this.loginForm.password,
+          })
+          .then((response) => {
+            alert(response.data.msg);
+            this.$store.commit("set_token", response.data.result.token);
+            if (response.data.state == true) {
+              if (response.data.result.type == "user") {
+                window.sessionStorage.setItem("login", "true");
+                window.sessionStorage.setItem("userType", "customer");
+                window.sessionStorage.setItem(
+                  "nickname",
+                  response.data.result.nickname
+                );
+                window.sessionStorage.setItem("id", response.data.result.id);
+                window.sessionStorage.setItem(
+                  "loginTime",
+                  new Date().getTime()
+                );
+                window.sessionStorage.setItem("name", this.loginForm.username);
+                this.$router.push({ path: "/Home" });
+              } else if (response.data.result.type == "admin") {
+                window.sessionStorage.setItem("login", "true");
+                window.sessionStorage.setItem("userType", "admin");
+                window.sessionStorage.setItem(
+                  "nickname",
+                  response.data.result.nickname
+                );
+                window.sessionStorage.setItem("id", response.data.result.id);
+                window.sessionStorage.setItem(
+                  "loginTime",
+                  new Date().getTime()
+                );
+                window.sessionStorage.setItem("name", this.loginForm.username);
+                this.$router.push({ path: "/AdminPage" });
+              }
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       });
     },
-    // //登录异步操作
-    // login() {
-    //   //校验登录表单是否合理
-    //   this.$refs.loginFormRef.validate(async (valid) => {
-    //     if (!valid) return;
-
-    //     let msg = "";
-    //     let status = 200;
-
-    //     //发送登入请求
-
-    //     //如果成功则全局存储登录信息
-    //     if (status === 200) {
-    //   window.sessionStorage.setItem("login", "true");
-    //   window.sessionStorage.setItem("userType", "customer");
-    //   window.sessionStorage.setItem("loginTime", new Date().getTime());
-    //   window.sessionStorage.setItem("name", this.loginForm.username);
-    //   await this.$router.push({ path: "/Home" });
-    //     } else {
-    //       this.$message.info(msg);
-    //     }
-    //   });
-    // },
   },
 };
 </script>

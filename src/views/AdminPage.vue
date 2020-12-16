@@ -21,7 +21,7 @@
             </el-button>
           </el-input>
         </el-menu-item>
-        <el-menu-item index="/adminIndex">你好，{{ username }} </el-menu-item>
+        <el-menu-item index="/adminIndex">你好，{{ nickname }} </el-menu-item>
         <el-menu-item id="exit-div" divided @click.native="logOut"
           >退出</el-menu-item
         >
@@ -43,8 +43,7 @@
               <span>用户管理</span>
             </template>
             <el-menu-item index="/userManage">用户列表</el-menu-item>
-            <el-menu-item index="/adminManage">管理员列表</el-menu-item>
-            <el-menu-item index="/searchUser">查找用户</el-menu-item>
+            <!-- <el-menu-item index="/adminManage">管理员列表</el-menu-item> -->
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -60,7 +59,9 @@ export default {
   data() {
     return {
       showDot: false,
-      username: window.sessionStorage.getItem("name"),
+      nickname: window.sessionStorage.getItem("nickname"),
+      // token: window.sessionStorage.getItem("token"),
+
       info: "",
       input: "",
     };
@@ -80,8 +81,9 @@ export default {
     },
     async searchMovies() {
       let response = await this.$axios.get(
-        "http://film.qingxu.website:8083/demo/queryMovie?id=" + this.input
+        "http://cinema.qingxu.website:8083/demo/queryMovie?id=" + this.input
       );
+      console.log(response.data);
       if (response && response.status === 200) {
         window.sessionStorage.setItem("movieName", response.data.name);
         window.sessionStorage.setItem("releaseTime", response.data.time);
@@ -100,6 +102,8 @@ export default {
 <style scoped>
 .index-container {
   height: 100%;
+  top: 0px;
+  left: 0px;
 }
 .main-container {
   height: 100%;

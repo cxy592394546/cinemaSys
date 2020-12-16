@@ -32,7 +32,7 @@ export default {
           console.log(err);
           alert(err);
         });
-      this.$router.push({ path: "/personalMess" });
+      this.$router.push({ path: "/adminIndex" });
     },
   },
 };

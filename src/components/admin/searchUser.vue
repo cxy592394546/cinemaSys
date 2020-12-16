@@ -46,11 +46,13 @@ export default {
   },
   methods: {
     async searchUser() {
+      this.userTable = [];
       let response = await this.$axios.post(
-        "http://cinema.qingxu.website:8086/api/system/searchUser",
+        "http://cinema.qingxu.website:8086/api/system/findUser",
         { username: this.input }
       );
-      this.userTable = response.data.result;
+      // this.userTable = response.data.result;
+      this.userTable.push(response.data.result)
     },
     async deleteUser(row) {
       let response = await this.$axios

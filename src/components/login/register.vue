@@ -10,6 +10,15 @@
         label-width="0px"
       >
         <h3 class="register_title">注册</h3>
+        <el-form-item prop="nickname">
+          <el-input
+            type="text"
+            v-model="registerForm.nickname"
+            auto-complete="off"
+            placeholder="昵称"
+          ></el-input>
+        </el-form-item>
+
         <el-form-item prop="username">
           <el-input
             type="text"
@@ -47,6 +56,7 @@ export default {
     return {
       //登录表单数据绑定
       registerForm: {
+        nickname: "",
         username: "",
         password: "",
         imgUrl: "",
@@ -54,6 +64,16 @@ export default {
       show: true,
       //表单的验证规则
       registerFormRules: {
+        //    验证昵称是否合法
+        username: [
+          { required: true, message: "请输入昵称", trigger: "blur" },
+          {
+            min: 1,
+            max: 20,
+            message: "用户名必须在1-20个字符之间",
+            trigger: "blur",
+          },
+        ],
         //    验证用户名是否合法
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
@@ -93,7 +113,8 @@ export default {
     register() {
       this.$refs.registerFormRef.validate(async (valid) => {
         let response = await this.$axios
-          .post("http://cinema.qingxu.website:8086/api/system/newUser", {
+          .post("http://cinema.qingxu.website:8086/api/system/register", {
+            nickname: this.registerForm.nickname,
             username: this.registerForm.username,
             password: this.registerForm.password,
           })

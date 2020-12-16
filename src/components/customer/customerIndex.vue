@@ -6,7 +6,6 @@
     <el-main>
       <el-carousel :interval="4000" type="card" height="600px'">
         <el-carousel-item v-for="item in images" :key="item.id">
-          <!-- <img :src="item.url" style="height:auto" /> -->
           <el-avatar shape="square" :size="320" fit="fill" :src="item.url"></el-avatar>
         </el-carousel-item>
       </el-carousel>

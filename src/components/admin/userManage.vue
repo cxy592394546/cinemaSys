@@ -14,7 +14,12 @@
       <el-table-column
         prop="username"
         label="用户名"
-        width="300"
+        width="150"
+      ></el-table-column>
+      <el-table-column
+        prop="nickname"
+        label="昵称"
+        width="400"
       ></el-table-column>
       <el-table-column
         prop="type"
@@ -26,10 +31,16 @@
         label="注册时间"
         width="450"
       ></el-table-column>
-      <el-table-column fixed="right" label="操作" width="100">
+      <el-table-column fixed="right" label="操作" width="300">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="deleteUser(scope.row)"
             >删除用户</el-button
+          >
+          <el-button type="text" size="small" @click="changeUsername(scope.row)"
+            >修改昵称</el-button
+          >
+          <el-button type="text" size="small" @click="changePassword(scope.row)"
+            >修改密码</el-button
           >
         </template>
       </el-table-column>
@@ -38,6 +49,7 @@
 </template>
 
 <script>
+import adminChangeUserNameVue from './adminChangeUserName.vue';
 export default {
   data() {
     return {
@@ -58,7 +70,7 @@ export default {
       this.$router.push("/addUser");
     },
     searchUser() {
-      this.$router.push("/searchUser")
+      this.$router.push("/searchUser");
     },
     async deleteUser(row) {
       let response = await this.$axios
@@ -66,13 +78,23 @@ export default {
           username: row.username,
         })
         .then((response) => {
-          alert(response.data.result);
+          alert(response.data.msg);
+          this.$router.push("/userManage");
         })
         .catch((err) => {
           console.log(err);
           alert(err);
         });
-      this.$router.push({ path: "/userManage" });
+    },
+    async changeUsername(row){
+      window.sessionStorage.setItem("username", row.username),
+      this.$router.push("/adminChangeUserName")
+    },
+    async changePassword(row){
+      window.sessionStorage.setItem("username", row.username),
+      console.log(row.password)
+      window.sessionStorage.setItem("password", row.password),
+      this.$router.push("/adminChangeUserPassword")
     },
   },
 };
