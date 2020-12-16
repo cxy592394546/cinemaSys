@@ -9,7 +9,9 @@
     </div>
     <div clas="text">用户名：{{ username }}</div>
     <div style="margin: 20px 0;"></div>
-    <el-button type="info" @click="changeName">修改用户名</el-button>
+    <div class="text">昵 称：{{ nickname }}</div>
+    <div style="margin: 20px 0;"></div>
+    <el-button type="info" @click="changeName">修改昵称</el-button>
     <el-button type="info" @click="changePassword">修改密码</el-button>
   </el-card>
 </template>
@@ -19,6 +21,7 @@ export default {
   data() {
     return {
       username: window.sessionStorage.getItem("name"),
+      nickname: window.sessionStorage.getItem("nickname")
     };
   },
 

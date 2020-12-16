@@ -7,12 +7,12 @@ const store = new Vuex.Store({
 	state: {
 		token: localStorage.getItem('token') ? localStorage.getItem('token') : ''
 	},
-	mutotions: {
-		set_Token (state,token) {
+	mutations: {
+		set_token (state,token) {
 			state.token =token;
-			localStorage.setItem("token",token.token);
+			localStorage.setItem("token",token);
 		},
-		del_Token (state) {
+		del_token (state) {
 			state.token = '';
 			localStorage.removeItem("token");
 		}

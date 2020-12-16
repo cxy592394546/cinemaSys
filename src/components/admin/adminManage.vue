@@ -2,7 +2,7 @@
   <el-card>
     <div slot="header" class="clearfix">
       <h3>管理员列表</h3>
-      <el-button type="success" style="float:right" @click.native="addAdmin()">
+      <el-button type="info" style="float:right" @click.native="addAdmin()">
         新建管理员
       </el-button>
     </div>
@@ -42,7 +42,6 @@ export default {
       let response = await this.$axios.post(
         "http://cinema.qingxu.website:8086/api/system/allAdmin"
       );
-      console.log(response.data);
       this.userTable = response.data.result;
     },
     addAdmin() {

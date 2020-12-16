@@ -16,7 +16,10 @@
 export default {
   data() {
     return {
-      review:"",
+      movieId: window.sessionStorage.getItem("movieId"),
+      reviewDate: window.sessionStorage.getItem("commentDate"),
+
+      review: "",
     };
   },
 
@@ -29,15 +32,15 @@ export default {
   methods: {
     async commitReview() {
       let response = await this.$axios
-        .post(url,{})
-        .then((response)=> {
+        .post("http://cinema.qingxu.website:8082/demo/addNewComment", {})
+        .then((response) => {
           alert(response.data);
         })
-        .catch((err)=>{
+        .catch((err) => {
           console.log(err);
           alert(err);
         });
-        this.$router.push({ path: "/movieMess"});
+      this.$router.push({ path: "/movieMess" });
     },
   },
 };

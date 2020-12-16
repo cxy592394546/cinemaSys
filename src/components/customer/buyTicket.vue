@@ -55,10 +55,19 @@ export default {
     };
   },
   methods: {
-    commitOrder() {
-      console.log(this.form)
-    }
-  }
+    async commitOrder() {
+      let response = await this.$axios.post(
+        "http://channel.qingxu.website:8087/demo/addTicket",
+        {
+          buyerId: 0,
+          movieId: 0,
+          price: 0,
+          seat: 0,
+          ticketId: 0,
+        }
+      );
+    },
+  },
 };
 </script>
 

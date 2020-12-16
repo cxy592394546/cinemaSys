@@ -26,7 +26,7 @@ export default {
           password: this.password,
         })
         .then((response) => {
-          alert(response.data.result);
+          alert(response.data.msg);
         })
         .catch((err) => {
           console.log(err);

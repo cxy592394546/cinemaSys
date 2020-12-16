@@ -41,15 +41,13 @@ axios.interceptors.request.use(
   (config) => {
     // 发送请求前
     // 判断是否存在token，如果存在将每个页面header都添加token
+    
     if (store.state.token) {
-      config.headers.common["Authorization"] = store.state.token.token;
+      config.headers.common["token"] = store.state.token;
     }
 
     return config;
   },
-  // (error) => {
-  //   return Promise.reject(error);
-  // }
 );
 
 // http response 拦截器
@@ -68,7 +66,6 @@ axios.interceptors.response.use(
           });
       }
     }
-    // return Promise.reject(error.response.data);
     return error;
   }
 );

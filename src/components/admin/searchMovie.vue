@@ -41,7 +41,7 @@ export default {
   methods: {
     async deleteMovie() {
       let response = await this.$axios.get(
-          "http://cinema.qingxu.website:8083/demo/deleteMovie?id=" +
+          "http://cinema.qingxu.website:8082/demo/deleteMovie?id=" +
             this.movieId
         )
         .then((response) => {

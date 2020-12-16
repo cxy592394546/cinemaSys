@@ -77,6 +77,8 @@ export default {
       movieInfo: window.sessionStorage.getItem("movieInfo"),
       movieLogo: window.sessionStorage.getItem("movieLogo"),
 
+      reviews: "",
+      reviewsInNeed: [],
       websites: "",
       likeFlag: false,
       date: "",
@@ -94,6 +96,7 @@ export default {
 
   mounted() {
     this.loadButton();
+    this.loadComment();
     this.getDate();
   },
 
@@ -152,12 +155,12 @@ export default {
       }
       return (zero + num).slice(-digit);
     },
-    // async loadComment() {
-    //    let response = await this.$axios.get(
-    //       "http://channel.qingxu.website:20086/demo/allComment"
-    //     )
-    //     this.comments = response.data;
-    // },
+    async loadComment() {
+       let response = await this.$axios.get(
+          "http://cinema.qingxu.website:8083/demo/allComment"
+        )
+        this.comments = response.data;
+    },
     handleCommand(command) {
       this.showDot = true;
     },

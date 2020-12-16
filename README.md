@@ -1,7 +1,5 @@
 # cinema_sys(front end)
 
-2020-2021 Tongji SSE Web Service And SOA course design
-
 ## Project setup
 ```
 npm install

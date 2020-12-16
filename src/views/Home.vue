@@ -22,7 +22,7 @@
           </el-input>
         </el-menu-item>
         <el-menu-item index="/personalIndex"
-          >你好，{{ username }}
+          >你好，{{ nickname }}
         </el-menu-item>
         <el-menu-item id="exit-div" divided @click.native="logOut"
           >退出</el-menu-item
@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       showDot: false,
-      username: window.sessionStorage.getItem("name"),
+      nickname: window.sessionStorage.getItem("nickname"),
       keywords: "",
       movies: "",
     };
