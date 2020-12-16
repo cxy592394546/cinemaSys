@@ -1,4 +1,4 @@
-# cinema_sys
+# cinema_sys(front end)
 
 ## Project setup
 ```
