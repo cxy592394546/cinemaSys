@@ -11,6 +11,7 @@
         </div>
         <div v-html="this.movieInfo">{{ this.movieInfo }}</div>
         <el-button type="danger" @click="deleteMovie()">删除影片</el-button>
+        <el-button type="info" @click="addSession()">添加场次</el-button>
       </el-card>
     </el-main>
     <el-footer>
@@ -57,6 +58,12 @@ export default {
         });
         this.$router.push({ path: "/MovieManage" });
     },
+
+    addSession(){
+      window.sessionStorage.setItem("movieId", this.movieId)
+      this.$router.push("/addSession")
+    }
+
     //async loadComment() {
     //    let response = await this.$axios.get(
     //       "http://channel.qingxu.website:20086/demo/allComment"

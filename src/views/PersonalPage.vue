@@ -29,6 +29,7 @@
           <el-menu-item index="/personalIndex">主页</el-menu-item>
           <el-menu-item index="/personalMess">个人信息</el-menu-item>
           <el-menu-item index="/ticketMess">影票列表</el-menu-item>
+          <el-menu-item index="/noticeList">通知列表</el-menu-item>          
         </el-menu>
       </el-aside>
       <el-main>
@@ -107,7 +108,7 @@ export default {
 }
 
 .el-main {
-  background-color: #83a2fa;
+  background-color: # rgb(179, 172, 172);
 }
 
 .el-aside {

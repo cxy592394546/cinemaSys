@@ -123,7 +123,7 @@ export default {
 }
 
 .el-main {
-  background-color: #83a2fa;
+  background-color: # rgb(179, 172, 172);
 }
 
 .el-aside {
