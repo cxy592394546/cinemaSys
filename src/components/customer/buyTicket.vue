@@ -60,7 +60,7 @@ export default {
         "http://channel.qingxu.website:8087/demo/addTicket",
         {
           buyerId: 0,
-          movieId: 0,
+          sessionId: 0,
           price: 0,
           seat: 0,
           ticketId: 0,

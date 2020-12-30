@@ -37,14 +37,12 @@
           active-text-color="#409EFF"
         >
           <el-menu-item index="/adminIndex">主页</el-menu-item>
+          <el-menu-item index="/cinemaManage">影院管理</el-menu-item>
+          <el-menu-item index="/sessionList">场次信息</el-menu-item>
           <el-menu-item index="/movieManage">影片管理</el-menu-item>
-          <el-submenu>
-            <template slot="title">
-              <span>用户管理</span>
-            </template>
-            <el-menu-item index="/userManage">用户列表</el-menu-item>
-            <!-- <el-menu-item index="/adminManage">管理员列表</el-menu-item> -->
-          </el-submenu>
+          <el-menu-item index="/userManage">用户管理</el-menu-item>
+          <el-menu-item index="/noticeManage">通知管理</el-menu-item>
+          <el-menu-item index="/allTicket">影票信息</el-menu-item>
         </el-menu>
       </el-aside>
       <el-main>
@@ -58,19 +56,11 @@
 export default {
   data() {
     return {
-      showDot: false,
       nickname: window.sessionStorage.getItem("nickname"),
-      // token: window.sessionStorage.getItem("token"),
 
       info: "",
       input: "",
     };
-  },
-
-  mounted() {
-    this.$nextTick(() => {
-      setInterval(this.CurentTime, 1000);
-    });
   },
 
   methods: {
@@ -83,7 +73,6 @@ export default {
       let response = await this.$axios.get(
         "http://cinema.qingxu.website:8083/demo/queryMovie?id=" + this.input
       );
-      console.log(response.data);
       if (response && response.status === 200) {
         window.sessionStorage.setItem("movieName", response.data.name);
         window.sessionStorage.setItem("releaseTime", response.data.time);
@@ -91,9 +80,6 @@ export default {
         window.sessionStorage.setItem("movieLogo", response.data.logo);
         this.$router.push({ path: "/adminMovieDetail" });
       }
-    },
-    handleCommand(command) {
-      this.showDot = true;
     },
   },
 };
@@ -144,7 +130,7 @@ export default {
 }
 
 .el-main {
-  background-color: #83a2fa;
+  background-color: rgb(179, 172, 172);
 }
 
 .out-button {

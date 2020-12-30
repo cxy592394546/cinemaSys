@@ -2,6 +2,9 @@
   <el-card>
     <div slot="header" class="clearfix">
       <h3>通知列表</h3>
+      <el-button type="info" style="float:right" @click.native="sendMessage()">
+        发送通知
+      </el-button>
     </div>
     <el-table :data="messageTable" border style="width:  100%">
       <el-table-column
@@ -30,6 +33,9 @@
       ></el-table-column> -->
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
+          <el-button type="text" size="small" @click="deleteMessage(scope.row)"
+            >删除通知</el-button
+          >
           <el-button type="text" size="small" @click="viewMessage(scope.row)"
             >详细信息</el-button
           >
@@ -45,7 +51,7 @@ export default {
     return {
       messageTable: [],
 
-      username: window.sessionStorage.getItem("name"),
+      adminName: window.sessionStorage.getItem("name"),
     };
   },
 
@@ -74,15 +80,42 @@ export default {
   methods: {
     async getMessages() {
       let response = await this.$axios.post(
-        "http://cinema.qingxu.website:8086/api/message/checkReceiveMessage",
-        { username: this.username }
+        "http://cinema.qingxu.website:8086/api/message/checkSendMessage",
+        { username: this.adminName }
       );
       this.messageTable = response.data.result;
     },
-    
+
+    sendMessage() {
+      this.$router.push("/sendNotice");
+    },
+
+    async deleteMessage(row) {
+      let response = await this.$axios
+        .post("http://cinema.qingxu.website:8086/api/message/deleteMessage", {
+          admin_username: this.adminName,
+          message_id: row.messageid,
+        })
+        .then((response) => {
+          alert(response.data.msg);
+          this.$router.push("/adminIndex")
+        })
+        .catch((err) => {
+          console.log(err);
+          alert(err);
+        });
+    },
+
     viewMessage(row) {
-      this.$alert(row.message, '通知', {
+      let message = "消息内容：" + row.message
+      let sender = "发送者：" + row.adminname
+      let receiver = "接收者：" + row.username
+      let time = this.$options.filters.formatDate(row.sendtime)
+      let sendtime = "发送时间:" + time
+      let htmlText = message + "<br/>" + sender + "<br/>" + receiver + "<br/>" + sendtime
+      this.$alert(htmlText, '通知', {
         confirmButtonText: "确定",
+        dangerouslyUseHTMLString: true
       });
     },
   },

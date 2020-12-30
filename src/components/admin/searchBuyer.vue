@@ -10,6 +10,11 @@
         width="150"
       ></el-table-column>
       <el-table-column
+        prop="buyerId"
+        label="顾客ID"
+        width="150"
+      ></el-table-column>
+      <el-table-column
         prop="sessionId"
         label="场次ID"
         width="150"
@@ -29,9 +34,11 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       ticketTable: [],
+
+      buyerId: window.sessionStorage.getItem("buyerId"),
     };
   },
 
@@ -41,12 +48,12 @@ export default {
 
   methods: {
     async ticketList() {
+      console.log(this.buyerId);
       let response = await this.$axios.post(
         "http://channel.qingxu.website:8087/demo/findByBuyerId",
-        { buyerId: "23" }
+        { buyerId: this.buyerId }
       );
       this.ticketTable = response.data;
-      console.log(this.ticketTable);
     },
 
     async deleteTicket(row) {
@@ -56,11 +63,11 @@ export default {
         })
         .then((response) => {
           alert("退票成功！");
-          this.$router.push("/personalIndex");
+          this.$router.push("/allTicket");
         })
-        .error((err)=>{
+        .error((err) => {
           alert(err);
-        })
+        });
     },
   },
 };

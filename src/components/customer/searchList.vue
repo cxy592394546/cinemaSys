@@ -28,16 +28,10 @@ export default {
     };
   },
   mounted() {
-    this.loadData();
+
   },
   beforeDestroy() {},
   methods: {
-    async loadData() {
-      let response = await this.$axios.get(
-        "http://cinema.qingxu.website:8083/demo/allMovies"
-      );
-      this.info = response.data.Movies;
-    },
     async searchMovies() {
       let response = await this.$axios.get(
           "http://cinema.qingxu.website:8083/demo/findByMovieName?movieName=" +

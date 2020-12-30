@@ -30,8 +30,11 @@ import ticketMess from "../components/personalPage/ticketMess.vue";
 //管理员界面
 import AdminPage from "../views/AdminPage.vue";
 import addAdmin from "../components/admin/addAdmin.vue";
-import addUser from "../components/admin/addUser.vue";
+import addCinema from "../components/admin/addCinema.vue"
 import addMovie from "../components/admin/addMovie.vue";
+import addRoom from "../components/admin/addRoom.vue";
+import addSession from "../components/admin/addSession.vue";
+import addUser from "../components/admin/addUser.vue";
 import adminChangeName from "../components/admin/adminChangeName.vue";
 import adminChangePassword from "../components/admin/adminChangePassword.vue";
 import adminChangeUserName from "../components/admin/adminChangeUserName.vue";
@@ -39,18 +42,24 @@ import adminChangeUserPassword from "../components/admin/adminChangeUserPassword
 import adminIndex from "../components/admin/adminIndex.vue";
 import adminManage from "../components/admin/adminManage.vue";
 import adminMovieDetail from "../components/admin/adminMovieDetail.vue";
+import allTicket from "../components/admin/allTicket.vue"
+import changeCinemaMess from "../components/admin/changeCinemaMess.vue";
+import cinemaManage from "../components/admin/cinemaManage.vue";
+import editCinema from "../components/admin/editCinema.vue"
+import editRoom from "../components/admin/editRoom.vue"
+import editSession from "../components/admin/editSession.vue"
 import movieManage from "../components/admin/movieManage.vue";
+import noticeManage from "../components/admin/noticeManage.vue";
+import roomManage from "../components/admin/roomManage.vue";
+import searchBuyer from "../components/admin/searchBuyer.vue";
 import searchMovie from "../components/admin/searchMovie.vue";
+import searchTicket from "../components/admin/searchTicket.vue";
 import searchUser from "../components/admin/searchUser.vue";
+import sendNotice from "../components/admin/sendNotice.vue";
+import sessionList from "../components/admin/sessionList.vue";
 import userManage from "../components/admin/userManage.vue";
 
-//影院方界面
-import CinemaPage from "../views/CinemaPage.vue";
-import changeCinemaMess from "../components/cinema/changeCinemaMess.vue";
-import cinemaIndex from "../components/cinema/cinemaIndex.vue";
-import roomAdjustment from "../components/cinema/roomAdjustment.vue";
-import sellTicket from "../components/cinema/sellTicket.vue";
-import sendNotification from "../components/cinema/sendNotification.vue";
+import sellTicket from "../components/admin/sellTicket.vue";
 
 Vue.use(VueRouter);
 
@@ -103,8 +112,11 @@ const routes = [
     redirect: "/adminIndex",
     children: [
       { path: "/addAdmin", component: addAdmin },
-      { path: "/addUser", component: addUser },
+      { path: "/addCinema", component: addCinema },
       { path: "/addMovie", component: addMovie },
+      { path: "/addRoom", component: addRoom },
+      { path: "/addSession", component: addSession },
+      { path: "/addUser", component: addUser },
       { path: "/adminChangeName", component: adminChangeName },
       { path: "/adminChangePassword", component: adminChangePassword },
       { path: "/adminChangeUserName", component: adminChangeUserName },
@@ -112,22 +124,25 @@ const routes = [
       { path: "/adminIndex", component: adminIndex },
       { path: "/adminManage", component: adminManage },
       { path: "/adminMovieDetail", component: adminMovieDetail },
-      { path: "/movieManage", component: movieManage },
-      { path: "/searchMovie", component: searchMovie },
-      { path: "/searchUser", component: searchUser },
-      { path: "/userManage", component: userManage },
-    ],
-  },
-  {
-    path: "/CinemaPage",
-    component: CinemaPage,
-    redirect: "/cinemaIndex",
-    children: [
+      { path: "/allTicket", component: allTicket },
       { path: "/changeCinemaMess", component: changeCinemaMess },
-      { path: "/cinemaIndex", component: cinemaIndex },
-      { path: "/roomAdjustment", component: roomAdjustment },
+      { path: "/cinemaManage", component: cinemaManage },
+      { path: "/editCinema", component: editCinema },
+      { path: "/editRoom", component:editRoom },
+      { path: "/editSession", component:editSession },
+      { path: "/movieManage", component: movieManage },
+      { path: "/noticeManage", component: noticeManage },
+      { path: "/roomManage", component:roomManage},
+      { path: "/searchBuyer", component: searchBuyer },
+      { path: "/searchMovie", component: searchMovie },
+      { path: "/searchTicket", component: searchTicket },
+      { path: "/searchUser", component: searchUser },
+      { path: "/sendNotice", component: sendNotice },
+      { path: "/sessionList", component: sessionList },
+      { path: "/userManage", component: userManage },
+
+
       { path: "/sellTicket", component: sellTicket },
-      { path: "/sendNotification", component: sendNotification },
     ],
   },
 ];

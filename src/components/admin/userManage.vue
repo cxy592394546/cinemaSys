@@ -26,11 +26,11 @@
         label="用户类型"
         width="150"
       ></el-table-column>
-      <el-table-column
-        prop="create_time"
-        label="注册时间"
-        width="450"
-      ></el-table-column>
+      <el-table-column prop="create_time" label="注册时间" width="450">
+        <template slot-scope="scope">{{
+          scope.row.create_time | formatDate
+        }}</template>
+      </el-table-column>
       <el-table-column fixed="right" label="操作" width="300">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="deleteUser(scope.row)"
@@ -49,16 +49,36 @@
 </template>
 
 <script>
-import adminChangeUserNameVue from './adminChangeUserName.vue';
+import adminChangeUserNameVue from "./adminChangeUserName.vue";
 export default {
   data() {
     return {
       userTable: [],
     };
   },
+
   mounted() {
     this.getUsers();
   },
+
+  filters: {
+    formatDate: function(value) {
+      let date = new Date(value);
+      let y = date.getFullYear();
+      let MM = date.getMonth() + 1;
+      MM = MM < 10 ? "0" + MM : MM;
+      let d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      let h = date.getHours();
+      h = h < 10 ? "0" + h : h;
+      let m = date.getMinutes();
+      m = m < 10 ? "0" + m : m;
+      let s = date.getSeconds();
+      s = s < 10 ? "0" + s : s;
+      return y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
+    },
+  },
+
   methods: {
     async getUsers() {
       let response = await this.$axios.post(
@@ -86,15 +106,15 @@ export default {
           alert(err);
         });
     },
-    async changeUsername(row){
+    async changeUsername(row) {
       window.sessionStorage.setItem("username", row.username),
-      this.$router.push("/adminChangeUserName")
+        this.$router.push("/adminChangeUserName");
     },
-    async changePassword(row){
+    async changePassword(row) {
       window.sessionStorage.setItem("username", row.username),
-      console.log(row.password)
+        console.log(row.password);
       window.sessionStorage.setItem("password", row.password),
-      this.$router.push("/adminChangeUserPassword")
+        this.$router.push("/adminChangeUserPassword");
     },
   },
 };
