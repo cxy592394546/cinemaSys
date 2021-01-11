@@ -36,7 +36,7 @@ export default {
   methods: {
     async changePassword() {
       let response = await this.$axios
-        .post("http://cinema.qingxu.website:8086/demo/UchangePassword", {
+        .put("http://cinema.qingxu.website:20086/v1/usercontroller/password", {
           newpassword: this.newpassword,
           username: this.username,
           password: this.password,

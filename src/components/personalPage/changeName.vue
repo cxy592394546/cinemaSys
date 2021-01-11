@@ -20,12 +20,11 @@ export default {
   methods: {
     async changeName() {
       let response = await this.$axios
-        .post("http://cinema.qingxu.website:8086/api/system/UchangeNickname", {
+        .put("http://cinema.qingxu.website:20086/v1/usercontroller/selfnickname", {
           username: this.username,
           newnickname: this.newnickname,
         })
         .then((response) => {
-          alert(response.data.msg);
           window.sessionStorage.setItem("nickname", this.newnickname)
         })
         .catch((err) => {

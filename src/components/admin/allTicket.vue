@@ -30,20 +30,8 @@
         label="顾客ID"
         width="150"
       ></el-table-column>
-      <el-table-column prop="price" label="票价" width="50"></el-table-column>
-      <el-table-column prop="seat" label="座位号" width="50"></el-table-column>
-      <!-- <el-table-column prop="sendtime" label="发送时间" width="300">
-        <template slot-scope="scope">{{
-          scope.row.sendtime | formatDate
-        }}</template>
-      </el-table-column>
-      <el-table-column fixed="right" label="操作" width="150">
-        <template slot-scope="scope">
-          <el-button type="text" size="small" @click="deleteMessage(scope.row)"
-            >删除通知</el-button
-          >
-        </template>
-      </el-table-column> -->
+      <el-table-column prop="price" label="票价" width="150"></el-table-column>
+      <el-table-column prop="seat" label="座位号" width="150"></el-table-column>
     </el-table>
   </el-card>
 </template>
@@ -83,10 +71,10 @@ export default {
 
   methods: {
     async getTickets() {
-      let response = await this.$axios.post(
-        "http://channel.qingxu.website:8087/demo/allTicket"
+      let response = await this.$axios.get(
+        "http://cinema.qingxu.website:20086/v1/ticketservice/allticket"
       )
-      this.ticketTable = response.data.Ticket;
+      this.ticketTable = response.data;
     },
 
     findByBuyerId() {

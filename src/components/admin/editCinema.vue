@@ -29,12 +29,12 @@ export default {
   methods: {
     async editCinema() {
       let response = await this.$axios
-        .put("http://106.14.220.105:5000/api/editCinemaInfo", {
+        .put("http://cinema.qingxu.website:20086/v1/cinema", {
           cinemaId: Number(this.cinemaId),
           info: this.mInfo,
         })
         .then((response) => {
-          alert(response.data);
+          alert("修改成功！");
         })
         .catch((err) => {
           console.log(err);

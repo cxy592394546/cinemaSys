@@ -81,8 +81,8 @@ export default {
 
   methods: {
     async getUsers() {
-      let response = await this.$axios.post(
-        "http://cinema.qingxu.website:8086/api/system/allUser"
+      let response = await this.$axios.get(
+        "http://cinema.qingxu.website:20086/v1/usercontroller/alluser"
       );
       this.userTable = response.data.result;
     },
@@ -94,12 +94,11 @@ export default {
     },
     async deleteUser(row) {
       let response = await this.$axios
-        .post("http://cinema.qingxu.website:8086/api/system/deleteUser", {
-          username: row.username,
+        .delete("http://cinema.qingxu.website:20086/v1/usercontroller/user", {
+          data: {username: row.username}
         })
         .then((response) => {
-          alert(response.data.msg);
-          this.$router.push("/userManage");
+          this.$router.push("/adminIndex");
         })
         .catch((err) => {
           console.log(err);

@@ -40,7 +40,7 @@ export default {
   methods: {
     async getUsers() {
       let response = await this.$axios.post(
-        "http://cinema.qingxu.website:8086/api/system/allAdmin"
+        "http://cinema.qingxu.website:20086/api/system/allAdmin"
       );
       this.userTable = response.data.result;
     },

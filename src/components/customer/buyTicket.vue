@@ -1,24 +1,11 @@
 <template>
   <el-card>
     <el-form ref="form" :model="form" :rules="formRules" label-width="100px">
-      <el-form-item label="影片名称">
-        <el-input :placeholder="movieName" disabled></el-input>
+      <el-form-item label="电影场次">
+        <el-input :placeholder="sessionId"></el-input>
       </el-form-item>
-      <el-form-item label="选择场次" prop="time">
-        <el-select
-          placeholder="选择场次"
-          v-model="form.time"
-          value-key="id"
-          style="width: 100%;"
-        >
-          <el-option
-            v-for="time in playTimes"
-            :key="time.id"
-            :label="time.time"
-            :value="time"
-          >
-          </el-option>
-        </el-select>
+      <el-form-item label="座位号">
+        <el-input placeholder="请输入座位号" v-model="seatId"></el-input>
       </el-form-item>
     </el-form>
     <el-button type="info" @click="commitOrder()">提交订单</el-button>
@@ -29,41 +16,26 @@
 export default {
   data() {
     return {
-      movieId: window.sessionStorage.getItem("movieId"),
-      movieName: window.sessionStorage.getItem("movieName"),
+      userId: window.sessionStorage.getItem("id"),
+      sessionId: window.sessionStorage.getItem("sessionId"),
 
-      form: {
-        date: "",
-        time: "",
-      },
-
-      playTimes: [
-        {
-          id: "场次1",
-          time: "time1",
-        },
-        {
-          id: "场次2",
-          time: "time2",
-        },
-      ],
-
-      formRules: {
-        date: [{ required: true, message: "请选择具体日期", trigger: "blur" }],
-        time: [{ required: true, message: "请选择具体场次", trigger: "blur" }],
-      },
+      seatId: "",
     };
   },
   methods: {
     async commitOrder() {
       let response = await this.$axios.post(
-        "http://channel.qingxu.website:8087/demo/addTicket",
+        "http://cinema.qingxu.website:20086/v1/ticketservice/newticket",
         {
-          buyerId: 0,
-          sessionId: 0,
-          price: 0,
-          seat: 0,
-          ticketId: 0,
+          buyerId: this.userId,
+          sessionId: this.sessionId,
+          price: 50,
+          seat: this.seatId,
+          ticketId: 100,
+        })
+        .then((response) => {
+          alert("添加成功");
+          this.$router.push("/movieMess")
         }
       );
     },

@@ -21,14 +21,14 @@ export default {
   methods: {
     async editSession() {
       let response = await this.$axios
-        .put("http://106.14.220.105:5000/api/editSessionInfo", {
+        .put("http://cinema.qingxu.website:20086/v1/session", {
           time: this.time,
           sessionId: this.sessionId,
           roomId: this.roomId,
           movieId: this.movieId,
         })
         .then((response) => {
-          alert(response.data);
+          alert("修改成功！");
         })
         .catch((err) => {
           console.log(err);

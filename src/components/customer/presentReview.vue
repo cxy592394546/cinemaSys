@@ -32,7 +32,7 @@ export default {
   methods: {
     async commitReview() {
       let response = await this.$axios
-        .post("http://cinema.qingxu.website:8082/demo/addNewComment", {})
+        .post("http://cinema.qingxu.website:20086/comment-controller/comment", {})
         .then((response) => {
           alert(response.data);
         })

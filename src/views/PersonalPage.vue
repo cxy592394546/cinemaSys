@@ -107,9 +107,9 @@ export default {
   transition: none !important;
 }
 
-.el-main {
-  background-color: # rgb(179, 172, 172);
-}
+/* .el-main {
+  background-color: rgb(179, 172, 172);
+} */
 
 .el-aside {
   background-color: rgb(60,60,60);

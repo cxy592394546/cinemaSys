@@ -19,12 +19,12 @@ export default {
   methods: {
     async changeName() {
       let response = await this.$axios
-        .post("http://cinema.qingxu.website:8086/api/system/changeNickname", {
+        .put("http://cinema.qingxu.website:20086/v1/usercontroller/nickname", {
           username: this.username,
           newnickname: this.newnickname,
         })
         .then((response) => {
-          alert(response.data.msg);
+          alert("修改成功！");
         })
         .catch((err) => {
           console.log(err);

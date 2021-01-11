@@ -26,11 +26,8 @@
       ></el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="deleteSession(scope.row)"
-            >删除场次</el-button
-          >
-          <el-button type="text" size="small" @click="editSession(scope.row)"
-            >修改时间</el-button
+          <el-button type="text" size="small" @click="buyTicket(scope.row)"
+            >购票</el-button
           >
         </template>
       </el-table-column>
@@ -39,12 +36,11 @@
 </template>
 
 <script>
+import buyTicketVue from './buyTicket.vue';
 export default {
   data() {
     return {
       cinemaTable: [],
-
-      adminName: window.sessionStorage.getItem("name"),
     };
   },
 
@@ -60,26 +56,10 @@ export default {
       this.cinemaTable = response.data.result;
     },
 
-    async deleteSession(row) {
-      let response = await this.$axios
-        .delete("http://cinema.qingxu.website:20086/v1/session", {
-          data: { sessionId: row.sessionId },
-        })
-        .then((response) => {
-          this.$router.push("/adminIndex");
-        })
-        .catch((err) => {
-          console.log(err);
-          alert(err);
-        });
-    },
-
-    async editSession(row) {
-      window.sessionStorage.setItem("sessionId", row.sessionId);
-      window.sessionStorage.setItem("roomId", row.roomId);
-      window.sessionStorage.setItem("movieId", row.movieId);
-      this.$router.push("/editSession");
-    },
+    buyTicket(row){
+        window.sessionStorage.setItem("sessionId", row.sessionId)
+        this.$router.push("/buyTicket")
+    }
   },
 };
 </script>

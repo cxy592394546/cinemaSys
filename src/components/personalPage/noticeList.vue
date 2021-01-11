@@ -14,12 +14,8 @@
         label="管理员帐号"
         width="250"
       ></el-table-column>
-      <el-table-column
-        prop="sendtime"
-        label="发送时间"
-        width="400"
-      >
-      <template slot-scope="scope">{{
+      <el-table-column prop="sendtime" label="发送时间" width="400">
+        <template slot-scope="scope">{{
           scope.row.sendtime | formatDate
         }}</template>
       </el-table-column>
@@ -73,15 +69,15 @@ export default {
 
   methods: {
     async getMessages() {
-      let response = await this.$axios.post(
-        "http://cinema.qingxu.website:8086/api/message/checkReceiveMessage",
-        { username: this.username }
+      let response = await this.$axios.get(
+        "http://cinema.qingxu.website:20086/v1/messagecontroller/receive-message?username=" +
+          this.username
       );
       this.messageTable = response.data.result;
     },
-    
+
     viewMessage(row) {
-      this.$alert(row.message, '通知', {
+      this.$alert(row.message, "通知", {
         confirmButtonText: "确定",
       });
     },

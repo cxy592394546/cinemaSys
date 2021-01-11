@@ -29,18 +29,17 @@ export default {
   methods: {
     async addRoom() {
       let response = await this.$axios
-        .post("http://106.14.220.105:5000/api/addRoom", {
+        .post("http://cinema.qingxu.website:20086/v1/room", {
           cinemaId: this.cinemaId,
-          info: this.mInfo
+          info: this.mInfo,
         })
         .then((response) => {
-          alert(response.data);
+          this.$router.push({ path: "/RoomManage" });
         })
         .catch((err) => {
           console.log(err);
           alert(err);
         });
-      this.$router.push({ path: "/RoomManage" });
     },
   },
 };

@@ -48,17 +48,17 @@ export default {
 
   methods: {
     async ticketList() {
-      let response = await this.$axios.post(
-        "http://channel.qingxu.website:8087/demo/findByTicketId",
-        { ticketId: this.ticketId }
+      let response = await this.$axios.get(
+        "http://cinema.qingxu.website:20086/v1/ticketservice/ticketinfo-ticketid",
+        { params: {ticketId: this.ticketId} }
       );
-      this.ticketTable.push(response.data);
+      this.ticketTable = response.data;
     },
 
     async deleteTicket(row) {
       let response = await this.$axios
-        .post("http://channel.qingxu.website:8087/demo/deleteTicket", {
-          ticketId: row.ticketId,
+        .delete("http://cinema.qingxu.website:20086/v1/ticketservice/ticket", {
+          data: {ticketId: row.ticketId},
         })
         .then((response) => {
           alert("退票成功！");

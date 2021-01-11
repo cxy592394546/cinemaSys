@@ -40,6 +40,7 @@
         >
           <el-menu-item index="/customerIndex">主页</el-menu-item>
           <el-menu-item index="/movieMess">影片列表</el-menu-item>
+          <el-menu-item index="/sessionMess">场次列表</el-menu-item>
           <el-menu-item index="/cinemaMess">影院列表</el-menu-item>
           <el-menu-item index="/favourites">收藏列表</el-menu-item>
         </el-menu>
@@ -122,9 +123,9 @@ export default {
   transition: none !important;
 }
 
-.el-main {
-  background-color: # rgb(179, 172, 172);
-}
+/* .el-main {
+  background-color: rgb(179, 172, 172);
+} */
 
 .el-aside {
   background-color: rgb(60, 60, 60);

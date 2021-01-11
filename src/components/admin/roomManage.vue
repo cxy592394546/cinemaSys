@@ -22,7 +22,7 @@
         label="放映厅信息"
         width="500"
       ></el-table-column>
-      <el-table-column fixed="right" label="操作" width="350">
+      <el-table-column fixed="right" label="操作" width="250">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="deleteRoom(scope.row)"
             >删除放映厅</el-button
@@ -33,9 +33,9 @@
           <el-button type="text" size="small" @click="editRoom(scope.row)"
             >更新信息</el-button
           >
-          <el-button type="text" size="small" @click="seatMess(scope.row)"
+          <!-- <el-button type="text" size="small" @click="seatMess(scope.row)"
             >座位情况</el-button
-          >
+          > -->
         </template>
       </el-table-column>
     </el-table>
@@ -59,7 +59,7 @@ export default {
   methods: {
     async getRoom() {
       let response = await this.$axios.get(
-        "http://106.14.220.105:5000/api/getRoomInfo?cinemaId=" + this.cinemaId
+        "http://cinema.qingxu.website:20086/v1/room?cinemaId=" + this.cinemaId
       );
       this.roomTable = response.data.result;
     },
@@ -70,11 +70,10 @@ export default {
 
     async deleteRoom(row) {
       let response = await this.$axios
-        .delete("http://106.14.220.105:5000/api/deleteRoom", {
+        .delete("http://cinema.qingxu.website:20086/v1/room", {
           data: { roomId: Number(row.roomId), cinemaId: Number(row.cinemaId) },
         })
         .then((response) => {
-          alert(response.data);
           this.$router.push("/cinemaManage");
         })
         .catch((err) => {

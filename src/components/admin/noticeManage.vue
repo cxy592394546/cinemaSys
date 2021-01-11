@@ -17,12 +17,8 @@
         label="管理员帐号"
         width="250"
       ></el-table-column>
-      <el-table-column
-        prop="sendtime"
-        label="发送时间"
-        width="400"
-      >
-      <template slot-scope="scope">{{
+      <el-table-column prop="sendtime" label="发送时间" width="400">
+        <template slot-scope="scope">{{
           scope.row.sendtime | formatDate
         }}</template>
       </el-table-column>
@@ -79,9 +75,9 @@ export default {
 
   methods: {
     async getMessages() {
-      let response = await this.$axios.post(
-        "http://cinema.qingxu.website:8086/api/message/checkSendMessage",
-        { username: this.adminName }
+      let response = await this.$axios.get(
+        "http://cinema.qingxu.website:20086/v1/messagecontroller/send-message?username=" +
+          this.adminName
       );
       this.messageTable = response.data.result;
     },
@@ -92,13 +88,14 @@ export default {
 
     async deleteMessage(row) {
       let response = await this.$axios
-        .post("http://cinema.qingxu.website:8086/api/message/deleteMessage", {
-          admin_username: this.adminName,
-          message_id: row.messageid,
-        })
+        .delete(
+          "http://cinema.qingxu.website:20086/v1/messagecontroller/message",
+          {
+            data: { admin_username: this.adminName, message_id: row.messageid },
+          }
+        )
         .then((response) => {
-          alert(response.data.msg);
-          this.$router.push("/adminIndex")
+          this.$router.push("/adminIndex");
         })
         .catch((err) => {
           console.log(err);
@@ -107,15 +104,16 @@ export default {
     },
 
     viewMessage(row) {
-      let message = "消息内容：" + row.message
-      let sender = "发送者：" + row.adminname
-      let receiver = "接收者：" + row.username
-      let time = this.$options.filters.formatDate(row.sendtime)
-      let sendtime = "发送时间:" + time
-      let htmlText = message + "<br/>" + sender + "<br/>" + receiver + "<br/>" + sendtime
-      this.$alert(htmlText, '通知', {
+      let message = "消息内容：" + row.message;
+      let sender = "发送者：" + row.adminname;
+      let receiver = "接收者：" + row.username;
+      let time = this.$options.filters.formatDate(row.sendtime);
+      let sendtime = "发送时间:" + time;
+      let htmlText =
+        message + "<br/>" + sender + "<br/>" + receiver + "<br/>" + sendtime;
+      this.$alert(htmlText, "通知", {
         confirmButtonText: "确定",
-        dangerouslyUseHTMLString: true
+        dangerouslyUseHTMLString: true,
       });
     },
   },

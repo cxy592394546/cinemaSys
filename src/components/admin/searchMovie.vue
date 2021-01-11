@@ -1,80 +1,123 @@
 <template>
-  <el-container>
-    <el-main>
-      <el-card shadow="never">
-        <img :src="movieLogo" style="width: 25%;display: block;" />
-        <div slot="header" class="clearfix">
-          <span>{{ movieName }}</span>
-        </div>
-        <div clas="text">
-          <span>上映时间：{{ releaseTime }}</span>
-        </div>
-        <div v-html="this.movieInfo">{{ this.movieInfo }}</div>
-        <el-button type="danger" @click="deleteMovie()">删除影片</el-button>
-      </el-card>
-    </el-main>
-    <el-footer>
-      <el-card> </el-card>
-    </el-footer>
-  </el-container>
+  <el-card>
+    <div slot="header" class="clearfix">
+      <h3>影片列表</h3>
+      <el-button type="success" style="float:right" @click.native="addMovie()">
+        添加影片
+      </el-button>
+    </div>
+    <el-row :gutter="20" class="el-row" type="flex">
+      <el-col
+        :span="6"
+        v-for="(o, index) in info.length"
+        :key="o"
+        class="el-col"
+      >
+        <el-card class="el-card" :key="index">
+          <img :src="info[o - 1].logo" class="image" />
+          <div style="padding: 14px;">
+            <span>{{ info[o - 1].name }}</span>
+            <div class="bottom clearfix">
+              <time class="time">上映时间：{{ info[o - 1].time }}</time>
+              <el-col>
+                <el-button
+                  type="text"
+                  class="button"
+                  @click.native="movieDetail(o)"
+                >
+                  查看详情
+                </el-button>
+                <el-button
+                  type="text"
+                  class="button"
+                  @click.native="deleteMovie(o)"
+                >
+                  删除影片
+                </el-button>
+              </el-col>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+  </el-card>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      movieName: window.sessionStorage.getItem("movieName"),
-      releaseTime: window.sessionStorage.getItem("releaseTime"),
-      movieInfo: window.sessionStorage.getItem("movieInfo"),
-      movieId: window.sessionStorage.getItem("movieId"),
-      movieLogo: window.sessionStorage.getItem("movieLogo"),
+      input: window.sessionStorage.getItem("input"),
 
-      comments: "",
-      likeFlag: false,
+      info: "",
+      movieName: "",
     };
   },
-
-  props: ["catchData"],
-
-  mounted() {},
-
+  mounted() {
+    this.loadData();
+  },
+  beforeDestroy() {},
   methods: {
-    async deleteMovie() {
+    async loadData() {
       let response = await this.$axios.get(
-          "http://cinema.qingxu.website:8082/demo/deleteMovie?id=" +
-            this.movieId
-        )
+        "http://cinema.qingxu.website:20086/v1/movie-controller/movie-list" ,
+        {
+          params: {
+            pageNum: 0,
+            pageSize: 100,
+            query: this.mName,
+          },
+        }
+      );
+      this.info = response.data.Movies;
+    },
+    movieDetail(o) {
+      window.sessionStorage.setItem("movieId", this.info[o - 1].id);
+      this.$router.push({ path: "/adminMovieDetail" });
+    },
+    async deleteMovie(o) {
+      let response = await this.$axios
+        .delete("http://cinema.qingxu.website:20086/v1/movie-controller/movie", {
+          data: { movie_id: this.info[o - 1].id },
+        })
         .then((response) => {
-          alert(response.data);
+          alert("删除成功！");
         })
         .catch((err) => {
           console.log(err);
           alert(err);
         });
-        this.$router.push({ path: "/MovieManage" });
+      window.location.reload();
     },
-    //async loadComment() {
-    //    let response = await this.$axios.get(
-    //       "http://channel.qingxu.website:20086/demo/allComment"
-    //     )
-    //     this.comments = response.data;
+    //async deleteMovie(o) {
+    //   let response = await this.$axios.post("http://cinema.qingxu.website:20086/demo/deleteMovies", {
+    //     id: this.info[o - 1].id,
+    //   });
     // },
+    addMovie() {
+      this.$router.push({ path: "/addMovie" });
+    },
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
   },
 };
 </script>
 
 <style>
-.text {
-  font-size: 14px;
+.time {
+  font-size: 13px;
+  color: #999;
 }
 
-.item {
-  margin-bottom: 18px;
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
 }
 
-.image {
-  width: 100%;
-  display: block;
+.button {
+  padding: 0;
+  float: right;
 }
 
 .clearfix:before,
@@ -82,7 +125,27 @@ export default {
   display: table;
   content: "";
 }
+
 .clearfix:after {
   clear: both;
+}
+.el-card {
+  min-width: 100%;
+  height: 100%;
+  margin-right: 20px;
+  /*transition: all .5s;*/
+}
+.el-card:hover {
+  margin-top: -5px;
+}
+.el-row {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.el-col {
+  border-radius: 4px;
+  align-items: stretch;
+  margin-bottom: 40px;
 }
 </style>

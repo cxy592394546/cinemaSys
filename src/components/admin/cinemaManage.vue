@@ -12,11 +12,11 @@
         label="影院id"
         width="250"
       ></el-table-column>
-      <el-table-column
-        prop="info"
-        label="影院信息"
-        width="500"
-      ></el-table-column>
+      <el-table-column prop="info" label="影院信息" width="500">
+        <template slot-scope="scope">
+          <span>{{ scope.row.info | ellipsis }}</span>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" label="操作" width="300">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="deleteCinema(scope.row)"
@@ -51,10 +51,20 @@ export default {
     this.getCinema();
   },
 
+  filters: {
+    ellipsis(value) {
+      if (!value) return "";
+      if (value.length > 30) {
+        return value.slice(0, 30) + "...";
+      }
+      return value;
+    },
+  },
+
   methods: {
     async getCinema() {
       let response = await this.$axios.get(
-        "http://106.14.220.105:5000/api/getCinemaInfo"
+        "http://cinema.qingxu.website:20086/v1/cinema"
       );
       this.cinemaTable = response.data.result;
     },
@@ -65,11 +75,10 @@ export default {
 
     async deleteCinema(row) {
       let response = await this.$axios
-        .delete("http://106.14.220.105:5000/api/deleteCinema", {
+        .delete("http://cinema.qingxu.website:20086/v1/cinema", {
           data: { cinemaId: row.cinemaId },
         })
         .then((response) => {
-          alert(response.data);
           this.$router.push("/adminIndex");
         })
         .catch((err) => {

@@ -75,7 +75,7 @@ export default {
 }
 
 .el-main {
-  background-color: # rgb(179, 172, 172);
+  /* background-color: rgb(179, 172, 172); */
   margin: 0;
   padding: 0;
 }

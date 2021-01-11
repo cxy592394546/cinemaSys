@@ -1,7 +1,11 @@
 <template>
   <el-card>
-    <h3>新建用户</h3>
-    <el-input placeholder="请输入放映厅Id" v-model="roomId" clearable></el-input>
+    <h3>新建场次</h3>
+    <el-input
+      placeholder="请输入放映厅Id"
+      v-model="roomId"
+      clearable
+    ></el-input>
     <div style="margin: 20px 0;"></div>
     <el-input placeholder="请输入场次时间" v-model="time" clearable></el-input>
     <div style="margin: 20px 0;"></div>
@@ -23,19 +27,18 @@ export default {
   methods: {
     async addSession() {
       let response = await this.$axios
-        .post("http://106.14.220.105:5000/api/addSession", {
+        .post("http://cinema.qingxu.website:20086/v1/session", {
           roomId: Number(this.roomId),
           time: this.time,
           movieId: Number(this.movieId),
         })
         .then((response) => {
-          alert(response.data.status.message);
+          this.$router.push({ path: "/sessionList" });
         })
         .catch((err) => {
           console.log(err);
           alert(err);
         });
-      this.$router.push({ path: "/sessionList" });
     },
   },
 };

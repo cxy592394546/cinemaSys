@@ -2,7 +2,6 @@
   <el-row :gutter="20" class="el-row" type="flex">
     <el-col :span="6" v-for="(o, index) in info.length" :key="o" class="el-col">
       <el-card class="el-card" :key="index">
-        <img src="../../assets/img/logo.png" class="image" />
         <div style="padding: 14px;">
           <span>{{ info[o - 1].name }}</span>
           <div class="bottom clearfix">
@@ -34,6 +33,8 @@
 export default {
   data() {
     return {
+      uid: window.sessionStorage.getItem("id"),
+
       info: "",
       movieName: "",
     };
@@ -45,35 +46,34 @@ export default {
   methods: {
     async loadData() {
       let response = await this.$axios.get(
-        "http://cinema.qingxu.website:8083/demo/allCMovies"
+        "http://cinema.qingxu.website:20086/v1/collected-movie-controller/all-cmovies?uid=" +
+          this.uid
       );
       this.info = response.data.CollectedMovies;
     },
+
     movieDetail(o) {
+      window.sessionStorage.setItem("movieId", this.info[o - 1].id);
       window.sessionStorage.setItem("movieName", this.info[o - 1].name);
-      window.sessionStorage.setItem("releaseTime", this.info[o - 1].time);
-      window.sessionStorage.setItem("movieInfo", this.info[o - 1].info);
       this.$router.push({ path: "/movieDetail" });
     },
+
     async RemoveMovie(o) {
       let response = await this.$axios
-        .get(
-          "http://cinema.qingxu.website:8083/demo/deleteCMovie?id=" +
-            this.info[o - 1].id
+        .delete(
+          "http://cinema.qingxu.website:20086/v1/collected-movie-controller/cmovie",
+          {
+            data: { cmovie_id: this.info[o - 1].id },
+          }
         )
-        // let response = await this.$axios
-        //   .post("http://film.qingxu.website:8083/demo/deleteCMovie", {
-        //     id: this.info[o - 1].id,
-        //   })
         .then((response) => {
-          console.log(response.data);
-          alert(response.data);
+          alert("删除成功");
         })
         .catch((err) => {
           console.log(err);
           alert(err);
         });
-        this.$router.push("/favourites")
+      this.$router.push("/movieMess");
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);

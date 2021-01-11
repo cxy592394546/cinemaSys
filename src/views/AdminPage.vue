@@ -69,17 +69,10 @@ export default {
       window.sessionStorage.clear();
       this.$router.push("/welcomeIndex");
     },
+
     async searchMovies() {
-      let response = await this.$axios.get(
-        "http://cinema.qingxu.website:8083/demo/queryMovie?id=" + this.input
-      );
-      if (response && response.status === 200) {
-        window.sessionStorage.setItem("movieName", response.data.name);
-        window.sessionStorage.setItem("releaseTime", response.data.time);
-        window.sessionStorage.setItem("movieInfo", response.data.info);
-        window.sessionStorage.setItem("movieLogo", response.data.logo);
-        this.$router.push({ path: "/adminMovieDetail" });
-      }
+      window.sessionStorage.setItem("keywords", this.input);
+      this.$router.push({ path: "/searchList" });
     },
   },
 };
@@ -128,10 +121,10 @@ export default {
 .el-menu-item {
   transition: none !important;
 }
-
+/* 
 .el-main {
   background-color: rgb(179, 172, 172);
-}
+} */
 
 .out-button {
   display: flex;

@@ -47,20 +47,20 @@ export default {
   methods: {
     async searchUser() {
       this.userTable = [];
-      let response = await this.$axios.post(
-        "http://cinema.qingxu.website:8086/api/system/findUser",
-        { username: this.input }
+      let response = await this.$axios.get(
+        "http://cinema.qingxu.website:20086/v1/usercontroller/user",
+        { params: { username: this.input } }
       );
       // this.userTable = response.data.result;
-      this.userTable.push(response.data.result)
+      this.userTable.push(response.data.result);
     },
     async deleteUser(row) {
       let response = await this.$axios
-        .post("http://cinema.qingxu.website:8086/api/system/deleteUser", {
-          username: row.username,
+        .delete("http://cinema.qingxu.website:20086/v1/usercontroller/user", {
+          data: { username: row.username },
         })
         .then((response) => {
-          alert(response.data.result);
+          alert("删除成功！");
         })
         .catch((err) => {
           console.log(err);

@@ -94,12 +94,11 @@ export default {
     login() {
       this.$refs.loginFormRef.validate(async (valid) => {
         let response = await this.$axios
-          .post("http://cinema.qingxu.website:8086/api/system/login", {
+          .post("http://cinema.qingxu.website:20086/v1/usercontroller/login", {
             username: this.loginForm.username,
             password: this.loginForm.password,
           })
           .then((response) => {
-            alert(response.data.msg);
             this.$store.commit("set_token", response.data.result.token);
             if (response.data.state == true) {
               if (response.data.result.type == "user") {
@@ -110,6 +109,7 @@ export default {
                   response.data.result.nickname
                 );
                 window.sessionStorage.setItem("id", response.data.result.id);
+                window.sessionStorage.setItem("url", response.data.result.url);
                 window.sessionStorage.setItem(
                   "loginTime",
                   new Date().getTime()
@@ -124,6 +124,7 @@ export default {
                   response.data.result.nickname
                 );
                 window.sessionStorage.setItem("id", response.data.result.id);
+                window.sessionStorage.setItem("url", response.data.result.url);
                 window.sessionStorage.setItem(
                   "loginTime",
                   new Date().getTime()

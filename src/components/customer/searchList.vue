@@ -2,11 +2,11 @@
   <el-row :gutter="20" class="el-row" type="flex">
     <el-col :span="6" v-for="(o, index) in info.length" :key="o" class="el-col">
       <el-card class="el-card" :key="index">
-        <img :src="info[o - 1].logo" class="image" />
+        <img :src="info[o - 1].movie_logo" class="image" />
         <div style="padding: 14px;">
-          <span>{{ info[o - 1].name }}</span>
+          <span>{{ info[o - 1].movieName }}</span>
           <div class="bottom clearfix">
-            <time class="time">上映时间：{{ info[o - 1].time }}</time>
+            <time class="time">上映时间：{{ info[o - 1].movie_time }}</time>
             <el-button type="text" class="button" @click.native="movieDetail(o)"
               >查看详情</el-button
             >
@@ -21,23 +21,32 @@
 export default {
   data() {
     return {
-      mName: windows.sessionStorage.getItem("keywords"),
+      mName: window.sessionStorage.getItem("keywords"),
 
       info: "",
       movieName: "",
     };
   },
+  
   mounted() {
-
+    this.searchMovies()
   },
+  
   beforeDestroy() {},
+
   methods: {
     async searchMovies() {
       let response = await this.$axios.get(
-          "http://cinema.qingxu.website:8083/demo/findByMovieName?movieName=" +
-          this.mName
-        )
-        this.info = response.data
+        "http://cinema.qingxu.website:20086/v1/movie-controller/movie-list",
+        {
+          params: {
+            pageNum: 0,
+            pageSize: 100,
+            query: this.mName,
+          },
+        }
+      );
+      this.info = response.data.movieLists;
     },
     movieDetail(o) {
       window.sessionStorage.setItem("movieName", this.info[o - 1].name);

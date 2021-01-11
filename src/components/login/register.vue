@@ -113,19 +113,22 @@ export default {
     register() {
       this.$refs.registerFormRef.validate(async (valid) => {
         let response = await this.$axios
-          .post("http://cinema.qingxu.website:8086/api/system/register", {
-            nickname: this.registerForm.nickname,
-            username: this.registerForm.username,
-            password: this.registerForm.password,
-          })
+          .post(
+            "http://cinema.qingxu.website:20086/v1/usercontroller/register",
+            {
+              nickname: this.registerForm.nickname,
+              username: this.registerForm.username,
+              password: this.registerForm.password,
+            }
+          )
           .then((response) => {
-            alert(response.data.msg);
+            alert("注册成功！")
+            this.$router.push({ path: "/welcomeIndex" });
           })
           .catch((err) => {
             console.log(err);
             alert(err);
           });
-        this.$router.push({ path: "/welcomeIndex" });
       });
     },
   },

@@ -28,17 +28,16 @@ export default {
   methods: {
     async addCinema() {
       let response = await this.$axios
-        .post("http://106.14.220.105:5000/api/addCinema", {
-          info: this.mInfo
+        .post("http://cinema.qingxu.website:20086/v1/cinema", {
+          info: this.mInfo,
         })
         .then((response) => {
-          alert(response.data);
+          this.$router.push({ path: "/cinemaManage" });
         })
         .catch((err) => {
           console.log(err);
           alert(err);
         });
-      this.$router.push({ path: "/cinemaManage" });
     },
   },
 };

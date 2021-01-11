@@ -27,13 +27,13 @@ export default {
   methods: {
     async sendNotice() {
       let response = await this.$axios
-        .post("http://cinema.qingxu.website:8086/api/message/addMessage", {
+        .post("http://cinema.qingxu.website:20086/v1/messagecontroller/message", {
           admin_username: this.admin_username,
           user_username: this.user_username,
           message: this.noticeInfo,
         })
         .then((response) => {
-          alert(response.data.msg);
+          alert("发送成功！");
         })
         .catch((err) => {
           console.log(err);

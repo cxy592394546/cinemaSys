@@ -31,18 +31,17 @@ export default {
   methods: {
     async loadData() {
       let response = await this.$axios.get(
-        "http://cinema.qingxu.website:8083/demo/allMovies"
+        "http://cinema.qingxu.website:20086/v1/movie-controller/all-movies"
       );
       this.info = response.data.Movies;
     },
+
     movieDetail(o) {
-      window.sessionStorage.setItem("movieName", this.info[o - 1].name);
       window.sessionStorage.setItem("movieId", this.info[o - 1].id);
-      window.sessionStorage.setItem("releaseTime", this.info[o - 1].time);
-      window.sessionStorage.setItem("movieInfo", this.info[o - 1].info);
-      window.sessionStorage.setItem("movieLogo", this.info[o - 1].logo);
+      window.sessionStorage.setItem("movieName", this.info[o - 1].name);
       this.$router.push({ path: "/movieDetail" });
     },
+    
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -84,7 +83,6 @@ export default {
   min-width: 100%;
   height: 100%;
   margin-right: 20px;
-  /*transition: all .5s;*/
 }
 .el-card:hover {
   margin-top: -5px;

@@ -58,30 +58,27 @@ export default {
   methods: {
     async loadData() {
       let response = await this.$axios.get(
-        "http://cinema.qingxu.website:8083/demo/allMovies"
+        "http://cinema.qingxu.website:20086/v1/movie-controller/all-movies",
       );
       this.info = response.data.Movies;
     },
     movieDetail(o) {
-      window.sessionStorage.setItem("movieName", this.info[o - 1].name);
-      window.sessionStorage.setItem("releaseTime", this.info[o - 1].time);
-      window.sessionStorage.setItem("movieInfo", this.info[o - 1].info);
-      window.sessionStorage.setItem("movieLogo", this.info[o - 1].logo);
       window.sessionStorage.setItem("movieId", this.info[o - 1].id);
       this.$router.push({ path: "/adminMovieDetail" });
     },
     async deleteMovie(o) {
-      let response = await this.$axios.get(
-          "http://cinema.qingxu.website:8083/demo/deleteMovie?id=" + this.info[o - 1].id
-        )
+      let response = await this.$axios
+        .delete("http://cinema.qingxu.website:20086/v1/movie-controller/movie", {
+          data: { movie_id: this.info[o - 1].id },
+        })
         .then((response) => {
-          alert(response.data);
+          alert("删除成功！");
         })
         .catch((err) => {
           console.log(err);
           alert(err);
         });
-        window.location.reload()
+      window.location.reload();
     },
     //async deleteMovie(o) {
     //   let response = await this.$axios.post("http://cinema.qingxu.website:20086/demo/deleteMovies", {

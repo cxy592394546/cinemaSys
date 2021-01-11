@@ -11,6 +11,7 @@ import movieDetail from "../components/customer/movieDetail.vue";
 import movieMess from "../components/customer/movieMess.vue";
 import presentReview from "../components/customer/presentReview.vue";
 import searchList from "../components/customer/searchList.vue";
+import sessionMess from "../components/customer/sessionMess.vue";
 
 //注册、登陆相关组件
 import Welcome from "../views/Welcome.vue";
@@ -20,6 +21,7 @@ import welcomeIndex from "../components/login/welcomeIndex.vue";
 
 //个人信息界面
 import PersonalPage from "../views/PersonalPage.vue";
+import changeLogo from "../components/personalPage/changeLogo.vue";
 import changeName from "../components/personalPage/changeName.vue";
 import changePassword from "../components/personalPage/changePassword.vue";
 import noticeList from "../components/personalPage/noticeList.vue";
@@ -91,6 +93,7 @@ const routes = [
       { path: "/movieMess", component: movieMess },
       { path: "/presentReview", component: presentReview },
       { path: "/searchList", component: searchList },
+      { path: "/sessionMess", component: sessionMess },
     ],
   },
   {
@@ -98,6 +101,7 @@ const routes = [
     component: PersonalPage,
     redirect: "/personalIndex",
     children: [
+      { path: "/changeLogo", component: changeLogo },
       { path: "/changeName", component: changeName },
       { path: "/changePassword", component: changePassword },
       { path: "/noticeList", component: noticeList },

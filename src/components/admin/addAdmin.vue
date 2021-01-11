@@ -1,9 +1,17 @@
 <template>
   <el-card>
     <h3>新建管理员</h3>
-    <el-input placeholder="请输入管理员用户名" v-model="username" clearable></el-input>
+    <el-input
+      placeholder="请输入管理员用户名"
+      v-model="username"
+      clearable
+    ></el-input>
     <div style="margin: 20px 0;"></div>
-    <el-input placeholder="请输入管理员密码" v-model="password" clearable></el-input>
+    <el-input
+      placeholder="请输入管理员密码"
+      v-model="password"
+      clearable
+    ></el-input>
     <div style="margin: 20px 0;"></div>
     <el-button type="success" @click="addAdmin()">确认提交</el-button>
   </el-card>
@@ -21,18 +29,17 @@ export default {
   methods: {
     async addAdmin() {
       let response = await this.$axios
-        .post("http://cinema.qingxu.website:8086/api/system/newAdmin", {
+        .post("http://cinema.qingxu.website:20086/api/system/newAdmin", {
           username: this.username,
           password: this.password,
         })
         .then((response) => {
-          alert(response.data.msg);
+          this.$router.push({ path: "/adminManage" });
         })
         .catch((err) => {
           console.log(err);
           alert(err);
         });
-      this.$router.push({ path: "/adminManage" });
     },
   },
 };

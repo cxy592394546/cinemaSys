@@ -30,13 +30,13 @@ export default {
   methods: {
     async editRoom() {
       let response = await this.$axios
-        .put("http://106.14.220.105:5000/api/editRoomInfo", {
+        .put("http://cinema.qingxu.website:5000/v1/room", {
           cinemaId: Number(this.cinemaId),
           roomId: Number(this.roomId),
           info: this.mInfo,
         })
         .then((response) => {
-          alert(response.data);
+          alert("修改成功！");
         })
         .catch((err) => {
           console.log(err);

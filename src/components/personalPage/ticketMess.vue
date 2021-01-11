@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       ticketTable: [],
     };
@@ -41,9 +41,9 @@ export default {
 
   methods: {
     async ticketList() {
-      let response = await this.$axios.post(
-        "http://channel.qingxu.website:8087/demo/findByBuyerId",
-        { buyerId: "23" }
+      let response = await this.$axios.get(
+        "http://cinema.qingxu.website:20086/v1/ticketservice/ticketinfo-buyerid",
+        { params: { buyerId: window.sessionStorage.getItem("id") } }
       );
       this.ticketTable = response.data;
       console.log(this.ticketTable);
@@ -51,16 +51,16 @@ export default {
 
     async deleteTicket(row) {
       let response = await this.$axios
-        .post("http://channel.qingxu.website:8087/demo/deleteTicket", {
-          ticketId: row.ticketId,
+        .delete("http://cinema.qingxu.website:20086/v1/ticketservice/ticket", {
+          data: { ticketId: row.ticketId },
         })
         .then((response) => {
           alert("退票成功！");
           this.$router.push("/personalIndex");
         })
-        .error((err)=>{
+        .error((err) => {
           alert(err);
-        })
+        });
     },
   },
 };

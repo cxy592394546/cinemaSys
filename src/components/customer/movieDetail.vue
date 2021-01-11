@@ -1,142 +1,145 @@
 <template>
-  <el-container>
-    <el-main height="100%">
-      <el-card shadow="never">
-        <img :src="movieLogo" style="width: 25%;display: block;" />
-        <div slot="header" class="clearfix">
-          <span>{{ movieName }}</span>
-        </div>
-        <div clas="text">
-          <span>上映时间：{{ releaseTime }}</span>
-        </div>
-        <div v-html="this.movieInfo">{{ this.movieInfo }}</div>
-        <template v-if="detectButton0">
-          <el-button type="success" round>
-            <span @click="jumpToShiGuang()">
-              从时光网购票
-            </span>
-          </el-button>
-        </template>
-        <template v-else>
-          <el-button type="success" round disabled>
-            <span @click="jumpToShiGuang()">
-              从时光网购票
-            </span>
-          </el-button>
-        </template>
-        <template v-if="detectButton1">
-          <el-button type="success" round>
-            <span @click="jumpToJingDong()">
-              从京东电影购票
-            </span>
-          </el-button>
-        </template>
-        <template v-else>
-          <el-button type="success" round disabled>
-            <span @click="jumpToJingDong()">
-              从京东电影购票
-            </span>
-          </el-button>
-        </template>
-        <el-button type="info" round>
-          <span @click="buyTicket()">购票</span>
+  <div>
+    <el-card shadow="never">
+      <img :src="movieInfo.logo" style="width: 25%;display: block;" />
+      <div slot="header" class="clearfix">
+        <span>ID: {{ movieId }}</span>
+        <br />
+        <span>{{ movieInfo.name }}</span>
+      </div>
+      <div clas="text">
+        <span>上映时间：{{ movieInfo.time }}</span>
+      </div>
+      <div v-html="this.movieInfo.info">{{ this.movieInfo.info }}</div>
+      <template v-if="flag1">
+        <el-button type="success" round>
+          <span @click="jumpToShiGuang()">
+            从时光网购票
+          </span>
         </el-button>
-        <el-button type="warning" round>
-          <span @click="likeMovie()">收藏</span>
+      </template>
+      <template v-else>
+        <el-button type="success" round disabled>
+          <span @click="jumpToShiGuang()">
+            从时光网购票
+          </span>
         </el-button>
-      </el-card>
-    </el-main>
-    <el-footer>
-      <el-card
-        shadow="never"
-        style="height:auto;overflow-y:auto;overflow-x:hidden;"
-      >
-        <el-container>
-          <el-header>
-            <span>影片评论</span>
-            <el-button type="info" style="float:right" @click="presentReview()"
-              >发表评论</el-button
-            >
-          </el-header>
-          <el-main>
-            reviews
-          </el-main>
-        </el-container>
-      </el-card>
-    </el-footer>
-  </el-container>
+      </template>
+      <template v-if="flag2">
+        <el-button type="success" round>
+          <span @click="jumpToJingDong()">
+            从京东电影购票
+          </span>
+        </el-button>
+      </template>
+      <template v-else>
+        <el-button type="success" round disabled>
+          <span @click="jumpToJingDong()">
+            从京东电影购票
+          </span>
+        </el-button>
+      </template>
+      <el-button type="info" round>
+        <span @click="buyTicket">前往购票</span>
+      </el-button>
+      <el-button type="warning" round>
+        <span @click="likeMovie()">收藏</span>
+      </el-button>
+    </el-card>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      movieName: window.sessionStorage.getItem("movieName"),
       movieId: window.sessionStorage.getItem("movieId"),
-      releaseTime: window.sessionStorage.getItem("releaseTime"),
-      movieInfo: window.sessionStorage.getItem("movieInfo"),
-      movieLogo: window.sessionStorage.getItem("movieLogo"),
+      movieName: window.sessionStorage.getItem("movieName"),
 
-      reviews: "",
-      reviewsInNeed: [],
-      websites: "",
+      movieInfo: [],
+      websites: [],
       likeFlag: false,
       date: "",
+
+      flag1: false,
+      flag2: false,
     };
   },
 
-  computed: {
-    detectButton0() {
-      return this.websites.hasOwnProperty("时光网");
-    },
-    detectButton1() {
-      return this.websites.hasOwnProperty("京东电影");
-    },
-  },
-
   mounted() {
+    this.loadMovie();
     this.loadButton();
-    this.loadComment();
     this.getDate();
   },
 
   methods: {
+    async loadMovie() {
+      let response = await this.$axios.get(
+        "http://cinema.qingxu.website:20086/v1/movie-controller/movie-detail?id=" +
+          this.movieId
+      );
+      this.movieInfo = response.data.movieDetails;
+    },
+
     async loadButton() {
       let response = await this.$axios.get(
-        "http://channel.qingxu.website:8084/testGetApi?movieName=" +
-          this.movieName
+        "http://cinema.qingxu.website:20086/v1/channelservice/channel",
+        {
+          params: {
+            movieName: this.movieName,
+          },
+        }
       );
       this.websites = response.data;
+      var info;
+      for (info in this.websites) {
+        if (
+          this.websites[info].channel &&
+          this.websites[info].channel == "时光网电影"
+        ) {
+          this.flag1 = true;
+        } else if (
+          this.websites[info].channel &&
+          this.websites[info].channel == "京东电影"
+        ) {
+          this.flag2 = true;
+        }
+      }
     },
+
     jumpToShiGuang() {
-      window.open(this.websites["时光网"].buyurl, "_blank");
+      window.open(this.websites[1].buyurl, "_blank");
     },
+
     jumpToJingDong() {
-      window.open(this.websites["京东电影"].buyurl, "_blank");
+      window.open(this.websites[0].buyurl, "_blank");
     },
     async likeMovie() {
       let response = await this.$axios
-        .post("http://film.qingxu.website:8083/demo/addNewCMovie", {
-          id: this.movieId,
-          name: this.movieName,
-          time: this.date,
-        })
+        .post(
+          "http://cinema.qingxu.website:20086/v1/collected-movie-controller/cmovie",
+          {
+            id: this.movieId,
+            name: this.movieInfo.name,
+            time: this.date,
+            uid: window.sessionStorage.getItem("id"),
+          }
+        )
         .then((response) => {
-          alert(response.data);
+          alert("收藏成功！")
+          this.$router.push("/favourites");
         })
         .catch((err) => {
           console.log(err);
           alert(err);
         });
     },
-    buyTicket(){
-      window.sessionStorage.setItem("movieId", this.movieId),
-      window.sessionStorage.setItem("movieName", this.movieName),
-      this.$router.push("/buyTicket");
+    buyTicket() {
+      this.$router.push("/sessionMess");
     },
     presentReview() {
       window.sessionStorage.setItem("movieId", this.movieId),
-      window.sessionStorage.setItem('commentDate', this.date)
+        window.sessionStorage.setItem("commentDate", this.date);
       this.$router.push("/presentReview");
     },
     getDate() {
@@ -154,15 +157,6 @@ export default {
         zero += "0";
       }
       return (zero + num).slice(-digit);
-    },
-    async loadComment() {
-       let response = await this.$axios.get(
-          "http://cinema.qingxu.website:8083/demo/allComment"
-        )
-        this.comments = response.data;
-    },
-    handleCommand(command) {
-      this.showDot = true;
     },
   },
 };
